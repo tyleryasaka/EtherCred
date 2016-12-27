@@ -47,3 +47,19 @@ Hopefully some pictures will make this easier to follow:
 The difficulty in implementing the system described above is maintaining the graph in a decentralized manner. After all, one of the inspirations of EtherCred is to minimize dependence on central authorities. In the current state of the internet, this is quite difficult. However, the [ethereum](https://www.ethereum.org/) platform shows promise as a solution to this problem. Ethereum is essentially a giant decentralized virtual machine - a machine that can act as both a database and a server for the EtherCred graph. While the concept of this project does not rely on ethereum, the implementation of it very much does.
 
 The goal of this project is to experimentally implement the system described above as a decentralized application (Dapp) on ethereum.
+
+# Development
+
+### Requirements:
+- [node](https://github.com/nodejs/node) - version ^6.9.1 needed if you use `testrpc` (see below)
+- [truffle](https://github.com/ConsenSys/truffle) - framework for developing dapps on ethereum
+
+### Recommendations:
+- [testrpc](https://github.com/ethereumjs/testrpc) - server for running a fake ethereum blockchain locally
+- [mist](https://github.com/ethereum/mist) - ethereum dapp browser
+
+### Running the tests
+1. Run `$ testrpc` to start the testrpc server
+2. In another terminal window, run `$ truffle test`
+
+More to come...
