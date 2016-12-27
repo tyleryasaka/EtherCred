@@ -3,6 +3,7 @@ pragma solidity ^0.4.2;
 contract EtherCred {
     struct Citizen {
         address[] approvals;
+        address[] disapprovals;
     }
 
     mapping(address => Citizen) citizens;
@@ -19,5 +20,19 @@ contract EtherCred {
 
     function getApprovalsFor(address _target) constant returns (address[]) {
         return citizens[_target].approvals;
+    }
+
+    function disapprove(address _target) {
+        citizens[msg.sender].disapprovals.push(_target);
+    }
+
+    function undisapprove(uint _index) {
+        if(_index < citizens[msg.sender].disapprovals.length) {
+            delete citizens[msg.sender].disapprovals[_index];
+        }
+    }
+
+    function getDisapprovalsFor(address _target) constant returns (address[]) {
+        return citizens[_target].disapprovals;
     }
 }
