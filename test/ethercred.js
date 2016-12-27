@@ -26,3 +26,19 @@ contract('EtherCred', function(accounts) {
     });
   });
 });
+
+contract('EtherCred', function(accounts) {
+  it("should have separate approval lists for different addresses", function() {
+    var etherCred = EtherCred.deployed();
+    var account_one = accounts[0];
+    var account_two = accounts[1];
+    var account_three = accounts[1];
+
+    return etherCred.approve(account_two, {from: account_one}).then(function() {
+        return etherCred.getApprovalsFor(account_three).then(function(result) {
+            var approvals = result.valueOf();
+            assert.equal(approvals.length, 0, 'There should not be any approvals.');
+        });
+    });
+  });
+});
