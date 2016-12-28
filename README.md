@@ -62,8 +62,18 @@ The difficulty in implementing the system described above is maintaining the gra
 - [testrpc](https://github.com/ethereumjs/testrpc) - server for running a fake ethereum blockchain locally
 - [mist](https://github.com/ethereum/mist) - ethereum dapp browser
 
-### Running the tests
+### Running the truffle tests for the [solidity](https://solidity.readthedocs.io/en/develop/) contracts
+
+The truffle tests are located in the `test` directory. Read the truffle docs for more info.
+
 1. Run `$ testrpc` to start the testrpc server
 2. In another terminal window, run `$ truffle test`
+
+### Running the browser tests for the javascript code
+
+The browser tests are located in the `app/test` directory. They use [Mocha](https://github.com/mochajs/mocha) and [Chai](https://github.com/chaijs/chai).
+
+1. Open the `test.html` file in a plain-ole browser (not Mist - just Chrome or Firefox or whatever you use)
+2. Uh, yeah... that's all you should have to do. The page will tell you how the tests are doing. The page uses CDNs so you will need an internet connection.
 
 More to come...
