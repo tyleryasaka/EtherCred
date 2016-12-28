@@ -57,6 +57,7 @@ The difficulty in implementing the system described above is maintaining the gra
 ### Requirements:
 - [node](https://github.com/nodejs/node) - version ^6.9.1 needed if you use `testrpc` (see below)
 - [truffle](https://github.com/ConsenSys/truffle) - framework for developing dapps on ethereum
+- [bower](https://github.com/bower/bower) - only used for the browser tests
 
 ### Recommendations:
 - [testrpc](https://github.com/ethereumjs/testrpc) - server for running a fake ethereum blockchain locally
@@ -73,7 +74,8 @@ The truffle tests are located in the `test` directory. Read the truffle docs for
 
 The browser tests are located in the `app/test` directory. They use [Mocha](https://github.com/mochajs/mocha) and [Chai](https://github.com/chaijs/chai).
 
-1. Open the `test.html` file in a plain-ole browser (not Mist - just Chrome or Firefox or whatever you use)
-2. Uh, yeah... that's all you should have to do. The page will tell you how the tests are doing. The page uses CDNs so you will need an internet connection.
+1. If you haven't already, run `$ bower install` to get local copies of mocha and chai.
+2. Open the `test.html` file in a plain-ole browser (not Mist - just Chrome or Firefox or whatever you use).
+3. That's it!
 
 More to come...
