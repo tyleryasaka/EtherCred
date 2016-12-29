@@ -14,6 +14,22 @@ function EtherCredUser(userAddress, weightingAlgorithm, server, graph) {
     this.server = server;
     this.graph = graph;
 
+    this.approve = function(targetAddress) {
+        return server.approve(this.userAddress, targetAddress);
+    };
+
+    this.unapprove = function(targetAddress) {
+        return server.unapprove(this.userAddress, targetAddress);
+    };
+
+    this.disapprove = function(targetAddress) {
+        return server.disapprove(this.userAddress, targetAddress);
+    };
+
+    this.undisapprove = function(targetAddress) {
+        return server.undisapprove(this.userAddress, targetAddress);
+    };
+
     this.getCredFor = function(addressOfUserToEvaluate) {
         return getCred(this.graph, this.userAddress, addressOfUserToEvaluate, this.weightingAlgorithm);
     };
