@@ -25,7 +25,7 @@ describe('EtherCredClient', function() {
         describe('using gravityAlgorithm', function() {
             it('should calculate cred correctly when there are multiple valid paths', function(done) {
                 var userAAddress = 'a', userBAddress = 'b';
-                var userA = new EtherCredClient(userAAddress, getApprovalsFor, getDisapprovalsFor, gravityAlgorithm, buildGraph, getCred, function() {
+                var userA = new EtherCredClient(userAAddress, getApprovalsFor, getDisapprovalsFor, gravityAlgorithm, function() {
                     var actualCred = userA.getCredFor(userBAddress);
                     var expectedCred = (1 / 2) + (1 / 16) - (1 / 4);
 
