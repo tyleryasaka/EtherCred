@@ -20,12 +20,14 @@ var getDisapprovalsFor = function(userId) {
     return Promise.resolve(users[userId].disapprovals);
 };
 
+var server = {getApprovalsFor, getDisapprovalsFor};
+
 describe('EtherCredClient', function() {
     describe('evaluate', function() {
         describe('using gravityAlgorithm', function() {
             it('should calculate cred correctly when there are multiple valid paths', function(done) {
                 var userAAddress = 'a', userBAddress = 'b';
-                var userA = new EtherCredClient(userAAddress, getApprovalsFor, getDisapprovalsFor, gravityAlgorithm, function() {
+                var userA = new EtherCredClient(userAAddress, gravityAlgorithm, server, function() {
                     var actualCred = userA.getCredFor(userBAddress);
                     var expectedCred = (1 / 2) + (1 / 16) - (1 / 4);
 

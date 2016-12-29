@@ -1,4 +1,4 @@
-function EtherCredClient(userAddress, getApprovalsFor, getDisapprovalsFor, gravityAlgorithm, onBuiltGraph) {
+function EtherCredClient(userAddress, gravityAlgorithm, server, onBuiltGraph) {
     var client = this;
 
     this.userAddress = userAddress;
@@ -8,7 +8,7 @@ function EtherCredClient(userAddress, getApprovalsFor, getDisapprovalsFor, gravi
         return getCred(this.graph, this.userAddress, addressOfUserToEvaluate, this.weightingAlgorithm);
     };
 
-    buildGraph(getApprovalsFor, getDisapprovalsFor, userAddress).then(function(graph) {
+    buildGraph(server.getApprovalsFor, server.getDisapprovalsFor, userAddress).then(function(graph) {
         client.graph = graph;
         onBuiltGraph();
     });
