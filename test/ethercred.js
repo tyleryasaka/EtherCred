@@ -8,7 +8,7 @@ contract('EtherCred', function(accounts) {
 
     return etherCred.approve(account_two, {from: account_one}).then(function() {
         return etherCred.getApprovalsFor(account_one).then(function(result) {
-            var approvals = result.valueOf();
+            var approvals = result;
             assert.equal(approvals.length, 1, 'There should be 1 approval.');
             assert.equal(approvals[0], account_two, 'The approval should be the approved address.');
 
@@ -17,7 +17,7 @@ contract('EtherCred', function(accounts) {
 
             return etherCred.unapprove(0, {from: account_one}).then(function() {
                 return etherCred.getApprovalsFor(account_one).then(function(result) {
-                    var approvals = result.valueOf();
+                    var approvals = result;
                     assert.equal(approvals.length, 1, 'There should be 1 approval.');
                     assert.equal(approvals[0], blankAddress, 'The approval should be deleted.');
                 });
@@ -36,7 +36,7 @@ contract('EtherCred', function(accounts) {
 
     return etherCred.approve(account_two, {from: account_one}).then(function() {
         return etherCred.getApprovalsFor(account_three).then(function(result) {
-            var approvals = result.valueOf();
+            var approvals = result;
             assert.equal(approvals.length, 0, 'There should not be any approvals.');
         });
     });
@@ -51,7 +51,7 @@ contract('EtherCred', function(accounts) {
 
     return etherCred.disapprove(account_two, {from: account_one}).then(function() {
         return etherCred.getDisapprovalsFor(account_one).then(function(result) {
-            var disapprovals = result.valueOf();
+            var disapprovals = result;
             assert.equal(disapprovals.length, 1, 'There should be 1 disapproval.');
             assert.equal(disapprovals[0], account_two, 'The disapproval should be the disapproved address.');
 
@@ -60,7 +60,7 @@ contract('EtherCred', function(accounts) {
 
             return etherCred.undisapprove(0, {from: account_one}).then(function() {
                 return etherCred.getDisapprovalsFor(account_one).then(function(result) {
-                    var disapprovals = result.valueOf();
+                    var disapprovals = result;
                     assert.equal(disapprovals.length, 1, 'There should be 1 disapproval.');
                     assert.equal(disapprovals[0], blankAddress, 'The disapproval should be deleted.');
                 });
@@ -79,7 +79,7 @@ contract('EtherCred', function(accounts) {
 
     return etherCred.disapprove(account_two, {from: account_one}).then(function() {
         return etherCred.getDisapprovalsFor(account_three).then(function(result) {
-            var disapprovals = result.valueOf();
+            var disapprovals = result;
             assert.equal(disapprovals.length, 0, 'There should not be any disapprovals.');
         });
     });
