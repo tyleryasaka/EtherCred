@@ -22,17 +22,19 @@ var getDisapprovalsFor = function(userId) {
 
 var server = {getApprovalsFor, getDisapprovalsFor};
 
-describe('EtherCredClient', function() {
-    describe('evaluate', function() {
+describe('EtherCredUser', function() {
+    describe('getCredFor', function() {
         describe('using gravityAlgorithm', function() {
-            it('should calculate cred correctly when there are multiple valid paths', function(done) {
+            it('should calculate cred correctly when there are multiple valid paths', function() {
+
                 var userAAddress = 'a', userBAddress = 'b';
-                var userA = new EtherCredClient(userAAddress, gravityAlgorithm, server, function() {
+                var userA;
+                return EtherCredClient.getUser(userAAddress, gravityAlgorithm, server).then(function(user) {
+                    userA = user;
                     var actualCred = userA.getCredFor(userBAddress);
                     var expectedCred = (1 / 2) + (1 / 16) - (1 / 4);
 
                     assert.equal(actualCred, expectedCred);
-                    done();
                 });
             });
         });
