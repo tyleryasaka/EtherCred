@@ -1,17 +1,22 @@
-function EtherCredClient(userAddress, gravityAlgorithm, server, onBuiltGraph) {
+var EtherCredClient = {
+    getUser: function(userAddress, weightingAlgorithm, server) {
+        return buildGraph(server.getApprovalsFor, server.getDisapprovalsFor, userAddress).then(function(graph) {
+            return new EtherCredUser(userAddress, weightingAlgorithm, server, graph);
+        });
+    }
+};
+
+function EtherCredUser(userAddress, weightingAlgorithm, server, graph) {
     var client = this;
 
     this.userAddress = userAddress;
-    this.weightingAlgorithm = gravityAlgorithm;
+    this.weightingAlgorithm = weightingAlgorithm;
+    this.server = server;
+    this.graph = graph;
 
     this.getCredFor = function(addressOfUserToEvaluate) {
         return getCred(this.graph, this.userAddress, addressOfUserToEvaluate, this.weightingAlgorithm);
     };
-
-    buildGraph(server.getApprovalsFor, server.getDisapprovalsFor, userAddress).then(function(graph) {
-        client.graph = graph;
-        onBuiltGraph();
-    });
 }
 
 function buildGraph(getApprovalsFor, getDisapprovalsFor, userId) {
