@@ -1,35 +1,44 @@
-function EtherCredUser(userAddress, weightingAlgorithm, server, graph) {
-    var client = this;
-
-    this.userAddress = userAddress;
+function EtherCredUser(address, weightingAlgorithm, server) {
+    this.address = address;
     this.weightingAlgorithm = weightingAlgorithm;
     this.server = server;
-    this.graph = graph;
+    this.graph = undefined;
+    this.approvals = undefined;
+    this.disapprovals = undefined;
 
-    this.approve = function(targetAddress) {
-        return server.approve(this.userAddress, targetAddress);
+    this.loadGraph = () => {
+        return buildGraph(this.server.getApprovalsFor, this.server.getDisapprovalsFor, this.address).then(graph => {
+            this.graph = graph;
+            this.approvals = this.graph[this.address].approvals;
+            this.disapprovals = this.graph[this.address].disapprovals;
+        });
     };
 
-    this.unapprove = function(targetAddress) {
-        return server.unapprove(this.userAddress, targetAddress);
+    this.approve = (targetAddress) => {
+        return this.server.approve(this.address, targetAddress).then(this.loadGraph);
     };
 
-    this.disapprove = function(targetAddress) {
-        return server.disapprove(this.userAddress, targetAddress);
+    this.unapprove = (targetAddress) => {
+        return this.server.unapprove(this.address, targetAddress).then(this.loadGraph);
     };
 
-    this.undisapprove = function(targetAddress) {
-        return server.undisapprove(this.userAddress, targetAddress);
+    this.disapprove = (targetAddress) => {
+        return this.server.disapprove(this.address, targetAddress).then(this.loadGraph);
     };
 
-    this.getCredFor = function(addressOfUserToEvaluate) {
-        return getCred(this.graph, this.userAddress, addressOfUserToEvaluate, this.weightingAlgorithm);
+    this.undisapprove = (targetAddress) => {
+        return this.server.undisapprove(this.address, targetAddress).then(this.loadGraph);
+    };
+
+    this.getCredFor = (addressOfUserToEvaluate) => {
+        return getCred(this.graph, this.address, addressOfUserToEvaluate, this.weightingAlgorithm);
     };
 }
 
 function getUser(userAddress, weightingAlgorithm, server) {
-    return buildGraph(server.getApprovalsFor, server.getDisapprovalsFor, userAddress).then(function(graph) {
-        return new EtherCredUser(userAddress, weightingAlgorithm, server, graph);
+    var user = new EtherCredUser(userAddress, weightingAlgorithm, server);
+    return user.loadGraph().then(() => {
+        return user;
     });
 }
 

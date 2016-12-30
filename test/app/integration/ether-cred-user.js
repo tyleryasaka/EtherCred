@@ -77,7 +77,7 @@ describe('EtherCredUser', function() {
             return getUser(userAAddress, gravityAlgorithm, server).then(function(user) {
                 userA = user;
                 return userA.approve(userBAddress).then(function() {
-                    var isActuallyApproved = users[userAAddress].approvals[userBAddress];
+                    var isActuallyApproved = userA.approvals[userBAddress];
                     assert.equal(isActuallyApproved, true);
                 });
             });
@@ -96,7 +96,7 @@ describe('EtherCredUser', function() {
             return getUser(userAAddress, gravityAlgorithm, server).then(function(user) {
                 userA = user;
                 return userA.unapprove(userBAddress).then(function() {
-                    var isActuallyApproved = users[userAAddress].approvals[userBAddress];
+                    var isActuallyApproved = userA.approvals[userBAddress];
                     assert.notEqual(isActuallyApproved, true);
                 });
             });
@@ -115,7 +115,7 @@ describe('EtherCredUser', function() {
             return getUser(userAAddress, gravityAlgorithm, server).then(function(user) {
                 userA = user;
                 return userA.disapprove(userBAddress).then(function() {
-                    var isActuallyDisapproved = users[userAAddress].disapprovals[userBAddress];
+                    var isActuallyDisapproved = userA.disapprovals[userBAddress];
                     assert.equal(isActuallyDisapproved, true);
                 });
             });
@@ -134,7 +134,7 @@ describe('EtherCredUser', function() {
             return getUser(userAAddress, gravityAlgorithm, server).then(function(user) {
                 userA = user;
                 return userA.undisapprove(userBAddress).then(function() {
-                    var isActuallyDisapproved = users[userAAddress].disapprovals[userBAddress];
+                    var isActuallyDisapproved = userA.disapprovals[userBAddress];
                     assert.notEqual(isActuallyDisapproved, true);
                 });
             });
