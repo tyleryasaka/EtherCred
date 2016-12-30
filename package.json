@@ -7,8 +7,9 @@
   },
   "scripts": {
     "test": "truffle test",
-    "build": "webpack",
-    "dev": "webpack-dev-server --hot"
+    "testrpc": "testrpc --accounts 9 -u 0 -u 1 --mnemonic 'engine guard group option ceiling ghost miss jar mask donkey mule betray'",
+    "dev": "webpack-dev-server --hot",
+    "seed": "truffle exec seed.js"
   },
   "repository": {
     "type": "git",
