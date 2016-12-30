@@ -96,8 +96,7 @@ describe('EtherCredUser', function() {
             return getUser(userAAddress, gravityAlgorithm, server).then(function(user) {
                 userA = user;
                 return userA.unapprove(userBAddress).then(function() {
-                    var isActuallyApproved = userA.approvals[userBAddress];
-                    assert.notEqual(isActuallyApproved, true);
+                    assert.deepEqual(userA.approvals, {});
                 });
             });
         });
@@ -134,8 +133,7 @@ describe('EtherCredUser', function() {
             return getUser(userAAddress, gravityAlgorithm, server).then(function(user) {
                 userA = user;
                 return userA.undisapprove(userBAddress).then(function() {
-                    var isActuallyDisapproved = userA.disapprovals[userBAddress];
-                    assert.notEqual(isActuallyDisapproved, true);
+                    assert.deepEqual(userA.disapprovals, {});
                 });
             });
         });
