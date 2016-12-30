@@ -42,3 +42,5 @@ function EtherCredServer(deployedContract) {
         return deployedContract.undisapprove(targetAddress, {from: requesterAddress});
     };
 }
+
+export default EtherCredServer;

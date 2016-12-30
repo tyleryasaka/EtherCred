@@ -1,11 +1,3 @@
-var EtherCredClient = {
-    getUser: function(userAddress, weightingAlgorithm, server) {
-        return buildGraph(server.getApprovalsFor, server.getDisapprovalsFor, userAddress).then(function(graph) {
-            return new EtherCredUser(userAddress, weightingAlgorithm, server, graph);
-        });
-    }
-};
-
 function EtherCredUser(userAddress, weightingAlgorithm, server, graph) {
     var client = this;
 
@@ -33,6 +25,12 @@ function EtherCredUser(userAddress, weightingAlgorithm, server, graph) {
     this.getCredFor = function(addressOfUserToEvaluate) {
         return getCred(this.graph, this.userAddress, addressOfUserToEvaluate, this.weightingAlgorithm);
     };
+}
+
+function getUser(userAddress, weightingAlgorithm, server) {
+    return buildGraph(server.getApprovalsFor, server.getDisapprovalsFor, userAddress).then(function(graph) {
+        return new EtherCredUser(userAddress, weightingAlgorithm, server, graph);
+    });
 }
 
 function buildGraph(getApprovalsFor, getDisapprovalsFor, userId) {
@@ -156,3 +154,5 @@ function getCred(graph, jackId, jillId, weightingAlgorithm) {
 
     return getTotalScore();
 };
+
+export { getUser, buildGraph, getCred };
