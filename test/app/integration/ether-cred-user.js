@@ -1,4 +1,8 @@
+var chai = require('chai');
 var assert = chai.assert;
+
+import {getUser} from '../../../app/javascripts/ether-cred-client.js';
+import gravityAlgorithm from '../../../app/javascripts/gravity-algorithm.js';
 
 var users;
 
@@ -50,7 +54,7 @@ describe('EtherCredUser', function() {
 
                 var userAAddress = 'a', userBAddress = 'b';
                 var userA;
-                return EtherCredClient.getUser(userAAddress, gravityAlgorithm, server).then(function(user) {
+                return getUser(userAAddress, gravityAlgorithm, server).then(function(user) {
                     userA = user;
                     var actualCred = userA.getCredFor(userBAddress);
                     var expectedCred = (1 / 2) + (1 / 16) - (1 / 4);
@@ -70,7 +74,7 @@ describe('EtherCredUser', function() {
 
             var userAAddress = 'a', userBAddress = 'b';
             var userA;
-            return EtherCredClient.getUser(userAAddress, gravityAlgorithm, server).then(function(user) {
+            return getUser(userAAddress, gravityAlgorithm, server).then(function(user) {
                 userA = user;
                 return userA.approve(userBAddress).then(function() {
                     var isActuallyApproved = users[userAAddress].approvals[userBAddress];
@@ -89,7 +93,7 @@ describe('EtherCredUser', function() {
 
             var userAAddress = 'a', userBAddress = 'b';
             var userA;
-            return EtherCredClient.getUser(userAAddress, gravityAlgorithm, server).then(function(user) {
+            return getUser(userAAddress, gravityAlgorithm, server).then(function(user) {
                 userA = user;
                 return userA.unapprove(userBAddress).then(function() {
                     var isActuallyApproved = users[userAAddress].approvals[userBAddress];
@@ -108,7 +112,7 @@ describe('EtherCredUser', function() {
 
             var userAAddress = 'a', userBAddress = 'b';
             var userA;
-            return EtherCredClient.getUser(userAAddress, gravityAlgorithm, server).then(function(user) {
+            return getUser(userAAddress, gravityAlgorithm, server).then(function(user) {
                 userA = user;
                 return userA.disapprove(userBAddress).then(function() {
                     var isActuallyDisapproved = users[userAAddress].disapprovals[userBAddress];
@@ -127,7 +131,7 @@ describe('EtherCredUser', function() {
 
             var userAAddress = 'a', userBAddress = 'b';
             var userA;
-            return EtherCredClient.getUser(userAAddress, gravityAlgorithm, server).then(function(user) {
+            return getUser(userAAddress, gravityAlgorithm, server).then(function(user) {
                 userA = user;
                 return userA.undisapprove(userBAddress).then(function() {
                     var isActuallyDisapproved = users[userAAddress].disapprovals[userBAddress];
