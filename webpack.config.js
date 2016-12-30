@@ -10,6 +10,7 @@ module.exports = {
     module: {
         loaders: [
             { test: /\.(js|jsx|es6)$/, exclude: /node_modules/, loader: "babel-loader"},
+            { test: /\.json$/i, loader: "json-loader"},
             { test: /\.sol/, loader: 'truffle-solidity' }
         ]
     },

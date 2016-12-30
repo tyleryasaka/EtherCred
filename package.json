@@ -30,5 +30,8 @@
     "truffle-solidity-loader": "0.0.8",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2"
+  },
+  "dependencies": {
+    "json-loader": "^0.5.4"
   }
 }
