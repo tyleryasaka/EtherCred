@@ -12,12 +12,10 @@ class Approval extends React.Component {
 
 class Approvals extends React.Component {
     render() {
-        var approvals = this.props.user.approvals;
-
-        if(approvals.length) {
+        if(this.props.approvals.length) {
             return (
                 <ul>
-                    {approvals.map((approval, index) => {
+                    {this.props.approvals.map((approval, index) => {
                         return <Approval approval={approval} key={index} onUnapprove={this.props.onUnapprove}/>;
                     })}
                 </ul>
@@ -29,16 +27,28 @@ class Approvals extends React.Component {
 }
 
 class App extends React.Component {
-  render() {
-    return (
-        <div>
-            <p>Your ethereum address is: {this.props.user.address}</p>
-            <h3>Your Approvals:</h3>
-            <Approvals user={this.props.user} onApprove={this.props.userActions.approve}
-                onUnapprove={this.props.userActions.unapprove}/>
-        </div>
-    );
-  }
+    constructor(props) {
+      super(props);
+      this.state = {approvals: props.user.approvals};
+      this.unapprove = this.unapprove.bind(this); // this line needed?
+    }
+
+    unapprove(target) {
+        this.props.user.unapprove(target).then(() => {
+            this.setState({approvals: this.props.user.approvals});
+        });
+    }
+
+    render() {
+        return (
+            <div>
+                <p>Your ethereum address is: {this.props.user.address}</p>
+                <h3>Your Approvals:</h3>
+                <Approvals approvals={this.state.approvals}
+                    onUnapprove={this.unapprove}/>
+            </div>
+        );
+    }
 }
 
 export {App, Approvals, Approval};

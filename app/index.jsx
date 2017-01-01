@@ -11,16 +11,8 @@ var accounts;
 var account;
 var user;
 
-var userActions = {
-    unapprove(target) {
-        user.unapprove(target).then(() => {
-            renderApp();
-        });
-    }
-};
-
 function renderApp() {
-    render(<App user={user} userActions={userActions}/>, document.getElementById('app'));
+    render(<App user={user}/>, document.getElementById('app'));
 }
 
 function setupUser() {
