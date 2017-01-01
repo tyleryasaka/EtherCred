@@ -1,26 +1,22 @@
-import React from 'react';
-import {render} from 'react-dom';
 import {getUser} from './lib/ether-cred-client.js';
 import gravityAlgorithm from './lib/gravity-algorithm.js';
 import EtherCredServer from './lib/ether-cred-server.js';
 import EtherCredContract from '../contracts/EtherCred.sol';
-import {App} from './ui/app.jsx';
+import renderApp from './ui/app.jsx';
+
+require("css!../node_modules/bulma/css/bulma.css");
 
 var Web3 = require("web3");
 var accounts;
 var account;
 var user;
 
-function renderApp() {
-    render(<App user={user}/>, document.getElementById('app'));
-}
-
 function setupUser() {
     var contract = EtherCredContract.deployed();
     var server = new EtherCredServer(contract);
     getUser(account, gravityAlgorithm, server).then(function(result) {
         user = result;
-        renderApp();
+        renderApp(user);
     });
 }
 

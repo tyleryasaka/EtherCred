@@ -1,4 +1,5 @@
 import React from 'react';
+import {render} from 'react-dom';
 import renderGraph from './renderGraph.js'
 
 class InputAddress extends React.Component {
@@ -157,4 +158,8 @@ class App extends React.Component {
     }
 }
 
-export {App, Approvals, Approval};
+function renderApp(user) {
+    render(<App user={user}/>, document.getElementById('app'));
+}
+
+export default renderApp;

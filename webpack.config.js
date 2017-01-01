@@ -2,7 +2,7 @@ var webpack = require("webpack");
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    entry: './app/index.jsx',
+    entry: './app/index.js',
     output: {
         path: "./build",
         filename: 'app.js'
