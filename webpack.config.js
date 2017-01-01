@@ -16,7 +16,8 @@ module.exports = {
     },
     plugins: [
         new CopyWebpackPlugin([
-            { from: './app/index.html', to: "index.html" }
+            { from: './app/index.html', to: "index.html" },
+            { from: './app/stylesheets/app.css', to: "app.css" },
         ])
     ],
     devServer: {
