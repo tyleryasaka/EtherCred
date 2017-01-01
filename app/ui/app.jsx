@@ -63,10 +63,15 @@ class Approvals extends React.Component {
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {approvals: this.props.user.approvals};
+        this.state = {
+            approvals: this.props.user.approvals,
+            disapprovals: this.props.user.disapprovals
+        };
 
-        this.unapprove = this.unapprove.bind(this);
         this.approve = this.approve.bind(this);
+        this.unapprove = this.unapprove.bind(this);
+        this.disapprove = this.disapprove.bind(this);
+        this.undisapprove = this.undisapprove.bind(this);
     }
 
     approve(target) {
@@ -81,6 +86,18 @@ class App extends React.Component {
         });
     }
 
+    disapprove(target) {
+        this.props.user.disapprove(target).then(() => {
+            this.setState({disapprovals: this.props.user.disapprovals});
+        });
+    }
+
+    undisapprove(target) {
+        this.props.user.undisapprove(target).then(() => {
+            this.setState({disapprovals: this.props.user.disapprovals});
+        });
+    }
+
     render() {
         return (
             <div>
@@ -89,6 +106,10 @@ class App extends React.Component {
                 <NewApproval onApprove={this.approve}/>
                 <Approvals approvals={this.state.approvals}
                     onUnapprove={this.unapprove}/>
+                <h3>Your Disapprovals:</h3>
+                <NewApproval onApprove={this.disapprove}/>
+                <Approvals approvals={this.state.disapprovals}
+                    onUnapprove={this.undisapprove}/>
             </div>
         );
     }
