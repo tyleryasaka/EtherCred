@@ -18,6 +18,7 @@ module.exports = {
         new CopyWebpackPlugin([
             { from: './app/index.html', to: "index.html" },
             { from: './app/stylesheets/app.css', to: "app.css" },
+            { from: './node_modules/bulma/css/bulma.css', to: "bulma.css" },
         ])
     ],
     devServer: {
