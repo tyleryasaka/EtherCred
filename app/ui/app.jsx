@@ -1,11 +1,11 @@
 import React from 'react';
 
-class NewApproval extends React.Component {
+class InputAddress extends React.Component {
     constructor(props) {
         super(props);
         this.state = {address: ''};
 
-        this.approve = this.approve.bind(this)
+        this.submit = this.submit.bind(this)
         this.onChangeAddress = this.onChangeAddress.bind(this)
     }
 
@@ -13,19 +13,38 @@ class NewApproval extends React.Component {
         this.setState({address: event.target.value});
     }
 
-    approve() {
-        this.props.onApprove(this.state.address);
+    submit() {
+        this.props.onSubmit(this.state.address);
         this.setState({address: ''});
     }
 
     render(){
         return (
             <div>
-                <input type="text" placeholder="New approval..." value={this.state.address}
+                <input type="text" placeholder={this.props.placeholder} value={this.state.address}
                     onChange={this.onChangeAddress}/>
-                <button onClick={this.approve}>Add</button>
+                <button onClick={this.submit}>{this.props.buttonText}</button>
             </div>
         )
+    }
+}
+
+class DisplayCred extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render(){
+        if(this.props.target) {
+            return (
+                <div>
+                    Cred: {this.props.amount}<br/>
+                    {this.props.target}
+                </div>
+            );
+        } else {
+            return null;
+        }
     }
 }
 
@@ -64,14 +83,22 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            credAmount: 0,
+            credTarget: null,
             approvals: this.props.user.approvals,
             disapprovals: this.props.user.disapprovals
         };
 
+        this.getCredFor = this.getCredFor.bind(this);
         this.approve = this.approve.bind(this);
         this.unapprove = this.unapprove.bind(this);
         this.disapprove = this.disapprove.bind(this);
         this.undisapprove = this.undisapprove.bind(this);
+    }
+
+    getCredFor(target) {
+        var cred = this.props.user.getCredFor(target);
+        this.setState({credAmount: cred, credTarget: target});
     }
 
     approve(target) {
@@ -102,12 +129,15 @@ class App extends React.Component {
         return (
             <div>
                 <p>Your ethereum address is: {this.props.user.address}</p>
+                <h3>Calculate Cred</h3>
+                <InputAddress onSubmit={this.getCredFor} placeholder="Get someone's cred..." buttonText="calculate"/>
+                <DisplayCred amount={this.state.credAmount} target={this.state.credTarget}/>
                 <h3>Your Approvals:</h3>
-                <NewApproval onApprove={this.approve}/>
+                <InputAddress onSubmit={this.approve} placeholder="New approval..." buttonText="add"/>
                 <Approvals approvals={this.state.approvals}
                     onUnapprove={this.unapprove}/>
                 <h3>Your Disapprovals:</h3>
-                <NewApproval onApprove={this.disapprove}/>
+                <InputAddress onSubmit={this.disapprove} placeholder="New disapproval..." buttonText="add"/>
                 <Approvals approvals={this.state.disapprovals}
                     onUnapprove={this.undisapprove}/>
             </div>
