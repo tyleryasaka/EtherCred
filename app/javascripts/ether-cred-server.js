@@ -1,5 +1,15 @@
 const blankAddress = '0x0000000000000000000000000000000000000000';
 
+function indexOf(item, list) {
+    var index = -1;
+    list.forEach((listItem, listIndex) => {
+        if(item === listItem) {
+            index = listIndex;
+        }
+    });
+    return index;
+}
+
 // TODO: test this
 function EtherCredServer(deployedContract) {
     this.getApprovalsFor = function(requesterAddress) {
@@ -19,7 +29,10 @@ function EtherCredServer(deployedContract) {
     };
 
     this.unapprove = function(requesterAddress, targetAddress) {
-        return deployedContract.unapprove(targetAddress, {from: requesterAddress});
+        return deployedContract.getApprovalsFor(requesterAddress).then(function(approvals) {
+            var index = indexOf(targetAddress, approvals);
+            return deployedContract.unapprove(index, {from: requesterAddress});
+        });
     };
 
     this.getDisapprovalsFor = function(requesterAddress) {
@@ -39,7 +52,10 @@ function EtherCredServer(deployedContract) {
     };
 
     this.undisapprove = function(requesterAddress, targetAddress) {
-        return deployedContract.undisapprove(targetAddress, {from: requesterAddress});
+        return deployedContract.getDisapprovalsFor(requesterAddress).then(function(disapprovals) {
+            var index = indexOf(targetAddress, disapprovals);
+            return deployedContract.undisapprove(index, {from: requesterAddress});
+        });
     };
 }
 
