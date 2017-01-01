@@ -1,4 +1,5 @@
 import React from 'react';
+import renderGraph from './renderGraph.js'
 
 class InputAddress extends React.Component {
     constructor(props) {
@@ -94,6 +95,13 @@ class App extends React.Component {
         this.unapprove = this.unapprove.bind(this);
         this.disapprove = this.disapprove.bind(this);
         this.undisapprove = this.undisapprove.bind(this);
+        this.renderGraph = this.renderGraph.bind(this);
+
+        this.renderGraph();
+    }
+
+    renderGraph() {
+        renderGraph(this.props.user.graph);
     }
 
     getCredFor(target) {
@@ -104,24 +112,28 @@ class App extends React.Component {
     approve(target) {
         this.props.user.approve(target).then(() => {
             this.setState({approvals: this.props.user.approvals});
+            this.renderGraph();
         });
     }
 
     unapprove(target) {
         this.props.user.unapprove(target).then(() => {
             this.setState({approvals: this.props.user.approvals});
+            this.renderGraph();
         });
     }
 
     disapprove(target) {
         this.props.user.disapprove(target).then(() => {
             this.setState({disapprovals: this.props.user.disapprovals});
+            this.renderGraph();
         });
     }
 
     undisapprove(target) {
         this.props.user.undisapprove(target).then(() => {
             this.setState({disapprovals: this.props.user.disapprovals});
+            this.renderGraph();
         });
     }
 
