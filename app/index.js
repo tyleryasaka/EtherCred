@@ -2,9 +2,7 @@ import {getUser} from './lib/ether-cred-client.js';
 import gravityAlgorithm from './lib/gravity-algorithm.js';
 import EtherCredServer from './lib/ether-cred-server.js';
 import EtherCredContract from '../contracts/EtherCred.sol';
-import renderApp from './ui/app.jsx';
-
-require("css!../node_modules/bulma/css/bulma.css");
+import renderApp from './ui/renderApp.js';
 
 var Web3 = require("web3");
 var accounts;
