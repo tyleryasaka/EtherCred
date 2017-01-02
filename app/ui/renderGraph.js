@@ -1,21 +1,22 @@
 import Cytoscape from 'cytoscape';
 
-export default function renderGraph(graph) {
-    var users = [];
+export default function renderGraph(users, primaryUserAddress) {
     var nodes = [];
     var edges = [];
 
-    for(var address in graph) {
-        users.push({
-            address,
-            approvals: graph[address].approvals,
-            disapprovals: graph[address].disapprovals
-        });
-    }
-
     users.forEach((user, index) => {
+        var nodeColor = '#000', nodeBackgroundColor = '#ddd';
+        if(user.address === primaryUserAddress) {
+            nodeColor = '#fff'
+            nodeBackgroundColor = '#222';
+        }
         nodes.push({
-            data: { id: user.address, name: user.address.slice(-4)}
+            data: {
+                id: user.address,
+                name: index + 1,
+                color: nodeColor,
+                backgroundColor: nodeBackgroundColor
+            }
         });
         user.approvals.forEach(approval => {
             edges.push({
@@ -38,27 +39,26 @@ export default function renderGraph(graph) {
         randomize: true
       },
 
+      userZoomingEnabled: false,
+      userPanningEnabled: false,
+
       style: Cytoscape.stylesheet()
         .selector('node')
           .css({
             'shape': 'circle',
-            'width': '50',
-            'height': '50',
+            'width': '35',
+            'height': '35',
             'content': 'data(name)',
             'text-valign': 'center',
-            'background-color': '#bbb',
-            'color': '#444'
+            'background-color': 'data(backgroundColor)',
+            'color': 'data(color)'
           })
-        .selector(':selected')
-          .css({
-            'background-color': '#fff',
-            'box-shadow': '0 0 4px #fff'
-          })
+        .selector(':selected').css({}) // maybe eventually do something here
         .selector('edge')
           .css({
             'curve-style': 'bezier',
             'opacity': 0.666,
-            'width': '4',
+            'width': '2',
             'target-arrow-shape': 'triangle',
             'source-arrow-shape': 'circle',
             'line-color': 'data(color)',

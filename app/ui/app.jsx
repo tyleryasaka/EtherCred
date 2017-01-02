@@ -138,6 +138,29 @@ class Approvals extends React.Component {
     }
 }
 
+class ConnectedUserList extends React.Component {
+    render() {
+        return (
+            <table className="table">
+                <tbody>
+                    <tr>
+                        <th>Key</th>
+                        <th>Address</th>
+                    </tr>
+                    {this.props.users.map((user, index) => {
+                        return  (
+                            <tr>
+                                <td>{index + 1}</td>
+                                <td>{user.address}</td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
+        );
+    }
+}
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -145,7 +168,8 @@ class App extends React.Component {
             credAmount: 0,
             credTarget: null,
             approvals: this.props.user.approvals,
-            disapprovals: this.props.user.disapprovals
+            disapprovals: this.props.user.disapprovals,
+            connectedUsers: []
         };
 
         this.refreshData = this.refreshData.bind(this);
@@ -167,7 +191,17 @@ class App extends React.Component {
     }
 
     renderGraph() {
-        renderGraph(this.props.user.graph);
+        var graph = this.props.user.graph;
+        var users = [];
+        for(var address in graph) {
+            users.push({
+                address,
+                approvals: graph[address].approvals,
+                disapprovals: graph[address].disapprovals
+            });
+        }
+        this.setState({connectedUsers: users});
+        renderGraph(users, this.props.user.address);
     }
 
     updateCred() {
@@ -253,7 +287,9 @@ class App extends React.Component {
                                 onUnapprove={this.undisapprove}/>
                         </div>
                         <div className="box">
+                            <h3>Your Network</h3>
                             <div id="user-graph"></div>
+                            <ConnectedUserList users={this.state.connectedUsers}/>
                         </div>
                     </div>
                 </section>
