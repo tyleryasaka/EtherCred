@@ -1,3 +1,7 @@
+.app {
+    padding: 20px;
+}
+
 #user-graph {
   height: 500px;
   width: 100%;
