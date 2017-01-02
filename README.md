@@ -2,80 +2,57 @@
 
 An experimental online credibility network built on [ethereum](https://www.ethereum.org/).
 
-The problem is simple: when we are interacting with other people online, we need a way evaluate their credibility. The solution put forth by EtherCred is a system which will require minimal user input and will output, for any given set of 2 users in the system (1 user observing and 1 user being observed), a relative score of credibility.
+## Concept
 
-## Why?
+The internet is a chaotic place. Perhaps one of the most challenging aspects of interacting with people online is establishing credibility. If you've ever used Uber, Amazon, AirBnB, or Yelp, you've probably relied on reviews somewhat to help you make a decision. Personally, I use reviews so much that occasionally I catch myself looking for reviews on items in physical stores. :unamused:
 
-Why not?
+In my experience, user reviews are generally pretty good (depending on the website). Taken with a grain of salt, they can help spot both the lemons and the jackpots. However, I have also seen the review system abused. People can be dishonest, and in the back of my mind I am always thinking, "There's a way to make this more reliable."
 
-Actually, there might be a couple of benefits to a graph-based relative credibility system. It's an interesting concept because the system is not fully democratic, in that not everyone has a vote on the credibility scores that Jack sees - *only the people in Jack's network*. For this reason the system might be resilient to invasions by outsiders with malicious agendas. To gain credibility in a network, users will need to earn the trust of other users. If a user ever engages in suspicious behavior, members of a network can ostracize this user. This provides a mechanism for self-regulation.
+This idea is purely theoretical, and in that theoretical world I think it makes a lot of sense. That said I have no idea if this is idea makes practical sense. In any case, here it is.
 
-Yet even though the system is not strictly democratic, it remains decentralized. No member of the system has any more power than any other member of the system. There are no designated admins or regulators - *the users are their own regulators*.
-
-## So... what are we talking about here?
-
-EtherCred is attempt to prototype a relative (rather than absolute) credibility system. Most online credibility systems currently in existence use absolute scores to measure credibility - whether that score is measured in points or stars or zebras.
-
-But in real life, is credibility really ever absolute? Maybe not.
-
-If Sue trusts Sam and Sam says Jill is a cool person, that means something to Sue, and Jill has some credibility in Sue's world (though not as much as Sam does). On the other hand, if Jack does not know Sue or Sam, Jill may have no credibility in Jack's world. Or worse yet, Jack may trust Jessica, who claims that Jill is a dishonest person - in which case Jill will have negative credibility in Jack's world. Jake and Jill aside, the point is that in the real world, credibility is relative to the observer.
-
-In more detail, the way credibility is determined goes something like this: the observer (let's call him Jack) has a list of people he trusts. Perhaps one of those people is Jill. Jill also has a list of people she trusts, and each of those people has a list of people they trust, each of which has a list of people they trust, and so forth. The end result, from Jack's perspective, is a giant network with him at the center. Just around the center are the people Jack trust's the most, and around them are the people they trust. The further from the center you go, the more distantly connected they are to Jack. While Jack might highly trust someone close to the center, he might be skeptical of someone further out, and entirely untrusting of someone not in his network at all.
-
-This is an oversimplification obviously, but hopefully it is a good starting point. With some fairly simple math and a little graph theory, we can take this network concept and actually generate real credibility scores for how much Jack ought to trust any given person, based on who is in his network.
-
-## How?
-
-### Algorithm
-
-Here are the technical details of how EtherCred will be implemented, in the algorithmic sense:
-
-Each user in EtherCred will have the ability to "approve" other users - a very similar process to following a user on Twitter. Each approved user will then approve other users, which will approve other users, etc. The net result (pun appreciated but not intended) will be a graph of users connected to each other by these "approvals".
-
-With these approvals in place, then, we can calculate a score for a given pair of (Jack, Jill) where Jack is the one trying to determine the credibility of Jill. There are a number of ways this could be done. Below is a description of the tentative algorithm that EtherCred will use:
-
-We will find all the ways Jill is connected to Jack through approvals (there could be none or multiple), and for each one, we will count the number of [vertices](https://en.wikipedia.org/wiki/Vertex_(graph_theory)) between them. The credibility for that path, then, is determined by this formula:
-
-`credibility = 1 / ( 2 ^ ( number_of_vertices - 1 ) )`
-
-Once we've calculated the credibility for each path, we just add up the results. The sum will be the credibility of Jill to Jack.
-
-*TODO: summarize this with a math formula*
+The idea is to allow people to create networks of credibility. People in the network are connected by approvals. When Jack approves Jill, she joins his network, as well as everyone in her network based on who she has approved. With this network, it would be possible to derive a credibility score for another person in the network based on how closely associated they are.
 
 *TODO: include a pretty diagram*
 
-We can even extend the concept to allow users to "disapprove" other users. *TODO: explain how this works*
+An important aspect of this is that credibility becomes relative to the observer. Jack may see a certain credibility score for James, who is connected at the 4th degree in his network. Yet Jessica may see an entirely different credibility score for him, because she is connected at the 2nd degree.
 
-In the end, then, all Jack has to do is approve and disapprove other users. The algorithm will look at the generated graph and use it to calculate credibility scores for other users relative to Jack, and he can resume tumbling down hills with Jill (who he now knows with certain probability is trustworthy).
+The reasoning behind calculating relative scores this way is that it gives each individual user a mechanism for self-regulation of their own network. Ultimately, for bad actors to get into Jill's network, they have to be somehow approved by someone in her network. At any time, she has the ability to take them out of her network by removing her approvals which link them to her. She could also reach out to those people and request that they instead remove the bad actors from their network.
 
-### Implementation
+The big caveat here is that there is some apparent effort required by users to make this system work properly. Likely, a lot work would need to be put into designing an interface to the system that gives users a maximum degree of control with a minimum amount of effort.
 
-The difficulty in implementing the system described above is maintaining the graph in a decentralized manner. After all, one of the aspirations of EtherCred is decentralization. In the current state of the internet, data resides on centralized servers that have to be owned and maintained by an individual or organization. However, the [ethereum](https://www.ethereum.org/) platform shows promise as a solution to this problem. Ethereum is essentially a giant decentralized virtual machine - a machine that can act as both a database and a server for the EtherCred graph. While the concept of this project does not rely on ethereum, the implementation of this prototype does.
+I'm curently working on defining the mechanics of this system in formal mathematical terms and will soon attach a sort of "whitepaper" with a more formal description. Because if there's a whitepaper, you know the idea must be legit.
+
+*Psuedo-whitepaper coming soon...* :sunglasses:
+
+## Implementation
+
+One challenge in implementing this system is data integrity. Obviously, all the data could be stored in one place, maintained by a trusted third party. Really though, I think the data should be maintained in a decentralized manner if possible. At first I thought about creating a complex protocol for users to spin up their own servers (or join existing servers), which would all communicate with one another and share data, blah blah blah... But then I realized that the [ethereum](https://www.ethereum.org/) platform could be a much simpler solution to this problem. Ethereum is essentially a giant decentralized virtual machine - a computer that runs its commands and stores its data across an entire network of users. While the overall concept described not rely on ethereum, this particular implementation does. The idea is to create an ethereum contract for maintaining the data, as well as a dapp (decentralized application) as an interface for interacting with the contract. Note that the contract is independent from the dapp, meaning an infinite number of dapps could be built on top of the same contract. The dapp created here will just serve as an example.
+
+Hypothetically, once users begin creating networks, various existing applications will have the ability to utilize the network and integrate it with their own user systems. For example, Amazon.com could allow users to associate an EtherCred account with their Amazon account. Then users could view the relative credibility of each reviewer while reading reviews, and possibly even view a weighted star rating of the product, based on the relative credibility of the users that have rated it.
 
 ## Development
 
 ### Requirements:
 - [node](https://github.com/nodejs/node) - version ^6.9.1 needed if you use `testrpc` (see below)
-- [truffle](https://github.com/ConsenSys/truffle) - framework for developing dapps on ethereum
-- [bower](https://github.com/bower/bower) - only used for the browser tests
 
 ### Recommendations:
 - [testrpc](https://github.com/ethereumjs/testrpc) - server for running a fake ethereum blockchain locally
-- [mist](https://github.com/ethereum/mist) - ethereum dapp browser
+- [metamask](https://github.com/MetaMask/metamask-plugin) - chrome plugin which allows chrome to browse ethereum apps
 
-### Running the truffle tests for the [solidity](https://solidity.readthedocs.io/en/develop/) contracts
+### Setup:
+- `$ npm install` - install node packages for the repository
+- `$ npm install -g ethereumjs-testrpc` - install testrpc globally for access to the `$ testrpc` command
 
-The truffle tests are located in the `test` directory. Read the truffle docs for more info.
+### Scripts:
+- `$ npm run testrpc` - Boot up the test ethereum blockchain
+- `$ npm run dev` - Deploy the contract to the test blockchain and serve the dapp on `localhost:8080`. testrpc must be running.
+- `$ npm run seed` - Creates some seed data which is handy when browsing the dapp. The above 2 scripts must be run first in separate terminals.
+- `$ npm test` - Runs both the solidity contract tests (using [truffle](https://github.com/ConsenSys/truffle)) as well as the javascript tests, using [Mocha](https://github.com/mochajs/mocha) and [Chai](https://github.com/chaijs/chai). testrpc must be running.
 
-1. Run `$ testrpc` to start the testrpc server
-2. In another terminal window, run `$ truffle test`
-
-### Running the browser tests for the javascript code
-
-The browser tests are located in the `app/test` directory. They use [Mocha](https://github.com/mochajs/mocha) and [Chai](https://github.com/chaijs/chai).
-
-1. If you haven't already, run `$ bower install` to get local copies of mocha and chai.
-2. Open the `test.html` file in a plain-ole browser (not Mist - just Chrome or Firefox or whatever you use).
-3. That's it!
-
-More to come...
+### Browsing the dapp locally:
+- Get the [metamask](https://github.com/MetaMask/metamask-plugin) chrome plugin
+- `$ npm run testrpc`
+- `$ npm run dev` (in a separate terminal)
+- `$ npm run seed` (in a third terminal)
+- In the metamask plugin, unlock a wallet vault with the mnemonic `engine guard group option ceiling ghost miss jar mask donkey mule betray`. This gives you access to the sample wallets created by the testrpc script.
+- Head over to `localhost:8080`. Hopefully you can interact with the dapp!
