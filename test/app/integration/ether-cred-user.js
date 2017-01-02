@@ -1,8 +1,8 @@
 var chai = require('chai');
 var assert = chai.assert;
 
-import {getUser} from '../../../app/javascripts/ether-cred-client.js';
-import gravityAlgorithm from '../../../app/javascripts/gravity-algorithm.js';
+import {getUser} from '../../../app/lib/ether-cred-client.js';
+import gravityAlgorithm from '../../../app/lib/gravity-algorithm.js';
 
 var users;
 

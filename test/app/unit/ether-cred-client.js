@@ -1,7 +1,7 @@
 var chai = require('chai');
 var assert = chai.assert;
 
-import {buildGraph, getCred} from '../../../app/javascripts/ether-cred-client.js';
+import {buildGraph, getCred} from '../../../app/lib/ether-cred-client.js';
 
 describe('buildGraph', function() {
     it('should build the correct graph', function() {

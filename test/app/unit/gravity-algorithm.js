@@ -1,7 +1,7 @@
 var chai = require('chai');
 var assert = chai.assert;
 
-import gravityAlgorithm from '../../../app/javascripts/gravity-algorithm.js';
+import gravityAlgorithm from '../../../app/lib/gravity-algorithm.js';
 
 describe('gravityAlgorithm', function() {
     it('should return a weight of 1 for 1 edge', function() {
