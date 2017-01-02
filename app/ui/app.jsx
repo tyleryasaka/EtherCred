@@ -5,7 +5,7 @@ import renderGraph from './renderGraph.js'
 class InputAddress extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {address: '', isValid: false, isDirty: false};
+        this.state = {address: '', isValid: false, isDirty: false, isLoading: false};
 
         this.submit = this.submit.bind(this)
         this.onChangeAddress = this.onChangeAddress.bind(this)
@@ -20,8 +20,12 @@ class InputAddress extends React.Component {
 
     submit() {
         if(this.state.isValid) {
-            this.props.onSubmit(this.state.address);
-            this.setState({address: '', isValid: false, isDirty: false});
+            this.props.onSubmit(this.state.address, () => {
+                this.setState({isLoading: false});
+            });
+            if(this.props.async) {
+                this.setState({address: '', isValid: false, isDirty: false, isLoading: true});
+            }
         } else {
             this.setState({isValid: true});
         }
@@ -41,8 +45,11 @@ class InputAddress extends React.Component {
 
     submitClass() {
         var names = ['button'];
-        if(!this.state.isValid) {
+        if(!this.state.isValid && !this.state.isLoading) {
             names.push('is-disabled');
+        }
+        if(this.state.isLoading) {
+            names.push('is-loading');
         }
         return names.join(' ');
     }
@@ -83,18 +90,31 @@ class DisplayCred extends React.Component {
 class Approval extends React.Component {
     constructor(props) {
         super(props);
-        this.unapprove = this.unapprove.bind(this)
+        this.state = {isLoading: false};
+
+        this.unapprove = this.unapprove.bind(this);
     }
 
     unapprove() {
-        this.props.onUnapprove(this.props.approval);
+        this.props.onUnapprove(this.props.approval, () => {
+            this.setState({isLoading: false});
+        });
+        this.setState({isLoading: true});
+    }
+
+    removeButtonClass() {
+        var names = ['button'];
+        if(this.state.isLoading) {
+            names.push('is-loading');
+        }
+        return names.join(' ');
     }
 
     render(){
         return (
             <tr>
                 <td>{this.props.approval}</td>
-                <td><a className="button" onClick={this.unapprove}>delete</a></td>
+                <td><a className={this.removeButtonClass()} onClick={this.unapprove}>delete</a></td>
             </tr>
         );
     }
@@ -161,29 +181,33 @@ class App extends React.Component {
         this.setState({credAmount: cred, credTarget: target});
     }
 
-    approve(target) {
+    approve(target, onFinish) {
         this.props.user.approve(target).then(() => {
+            onFinish();
             this.setState({approvals: this.props.user.approvals});
             this.refreshData();
         });
     }
 
-    unapprove(target) {
+    unapprove(target, onFinish) {
         this.props.user.unapprove(target).then(() => {
+            onFinish();
             this.setState({approvals: this.props.user.approvals});
             this.refreshData();
         });
     }
 
-    disapprove(target) {
+    disapprove(target, onFinish) {
         this.props.user.disapprove(target).then(() => {
+            onFinish();
             this.setState({disapprovals: this.props.user.disapprovals});
             this.refreshData();
         });
     }
 
-    undisapprove(target) {
+    undisapprove(target, onFinish) {
         this.props.user.undisapprove(target).then(() => {
+            onFinish();
             this.setState({disapprovals: this.props.user.disapprovals});
             this.refreshData();
         });
@@ -216,13 +240,15 @@ class App extends React.Component {
                         </div>
                         <div className="box">
                             <h3>Your Approvals</h3>
-                            <InputAddress onSubmit={this.approve} placeholder="New approval..." buttonText="add"/>
+                            <InputAddress onSubmit={this.approve} placeholder="New approval..."
+                                async={true} buttonText="add"/>
                             <Approvals approvals={this.state.approvals}
                                 onUnapprove={this.unapprove}/>
                         </div>
                         <div className="box">
                             <h3>Your Disapprovals</h3>
-                            <InputAddress onSubmit={this.disapprove} placeholder="New disapproval..." buttonText="add"/>
+                            <InputAddress onSubmit={this.disapprove} placeholder="New disapproval..."
+                                async={true} buttonText="add"/>
                             <Approvals approvals={this.state.disapprovals}
                                 onUnapprove={this.undisapprove}/>
                         </div>
