@@ -268,11 +268,6 @@ class App extends React.Component {
                             Your ethereum address is: {this.props.user.address}
                         </div>
                         <div className="box">
-                            <h3>Calculate Cred</h3>
-                            <InputAddress onSubmit={this.getCredFor} placeholder="Get someone's cred..." buttonText="calculate"/>
-                            <DisplayCred amount={this.state.credAmount} target={this.state.credTarget}/>
-                        </div>
-                        <div className="box">
                             <h3>Your Approvals</h3>
                             <InputAddress onSubmit={this.approve} placeholder="New approval..."
                                 async={true} buttonText="add"/>
@@ -285,6 +280,11 @@ class App extends React.Component {
                                 async={true} buttonText="add"/>
                             <Approvals approvals={this.state.disapprovals}
                                 onUnapprove={this.undisapprove}/>
+                        </div>
+                        <div className="box">
+                            <h3>Calculate Cred</h3>
+                            <InputAddress onSubmit={this.getCredFor} placeholder="Get someone's cred..." buttonText="calculate"/>
+                            <DisplayCred amount={this.state.credAmount} target={this.state.credTarget}/>
                         </div>
                         <div className="box">
                             <h3>Your Network</h3>
