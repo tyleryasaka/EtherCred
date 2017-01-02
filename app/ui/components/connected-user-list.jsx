@@ -11,7 +11,7 @@ export default class ConnectedUserList extends React.Component {
                     </tr>
                     {this.props.users.map((user, index) => {
                         return  (
-                            <tr>
+                            <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{user.address}</td>
                             </tr>
