@@ -3,7 +3,6 @@ import React from 'react';
 import renderGraph from '../renderGraph.js';
 import InputAddress from './input-address.jsx';
 import DisplayCred from './display-cred.jsx';
-import Approval from './approval.jsx';
 import Approvals from './approvals.jsx';
 import ConnectedUserList from './connected-user-list.jsx';
 

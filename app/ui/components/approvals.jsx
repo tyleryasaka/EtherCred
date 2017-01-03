@@ -1,4 +1,5 @@
 import React from 'react';
+import Approval from './approval.jsx';
 
 export default class Approvals extends React.Component {
     render() {
