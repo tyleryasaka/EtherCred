@@ -28,8 +28,10 @@
     "bulma": "0.2.3",
     "copy-webpack-plugin": "4.0.1",
     "cytoscape": "2.7.13",
+    "ethereumjs-testrpc": "3.0.3",
     "react": "15.4.1",
     "react-dom": "15.4.1",
+    "truffle": "2.1.1",
     "truffle-solidity-loader": "tyleryasaka/truffle-solidity-loader#3242ebf",
     "webpack": "1.14.0",
     "webpack-dev-server": "1.16.2"
