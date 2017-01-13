@@ -33,15 +33,14 @@ Hypothetically, once users begin creating networks, various existing application
 ## Development
 
 ### Requirements:
-- [node](https://github.com/nodejs/node) - version ^6.9.1 needed if you use `testrpc` (see below)
+- [node](https://github.com/nodejs/node) - version 6.9.1 or greater
 
 ### Recommendations:
-- [testrpc](https://github.com/ethereumjs/testrpc) - server for running a fake ethereum blockchain locally
 - [metamask](https://github.com/MetaMask/metamask-plugin) - chrome plugin which allows chrome to browse ethereum apps
 
 ### Setup:
-- `$ npm install` - install node packages for the repository
-- `$ npm install -g ethereumjs-testrpc` - install testrpc globally for access to the `$ testrpc` command
+- Navigate to the root directory of this repository in your terminal.
+- `$ npm install` - yep that simple
 
 ### Scripts:
 - `$ npm run testrpc` - Boot up the test ethereum blockchain
@@ -54,5 +53,6 @@ Hypothetically, once users begin creating networks, various existing application
 - `$ npm run testrpc`
 - `$ npm run dev` (in a separate terminal)
 - `$ npm run seed` (in a third terminal)
-- In the metamask plugin, unlock a wallet vault with the mnemonic `engine guard group option ceiling ghost miss jar mask donkey mule betray`. This gives you access to the sample wallets created by the testrpc script.
+- Open the metamask plugin in chrome. Change the network to `localhost 8545`. (It is probably set to the Ropsten Test Net by default.)
+- One more thing to set up in the metamask plugin: unlock a wallet vault with the mnemonic `engine guard group option ceiling ghost miss jar mask donkey mule betray`. This gives you access to the sample wallets created by the testrpc script.
 - Head over to `localhost:8080`. Hopefully you can interact with the dapp!
