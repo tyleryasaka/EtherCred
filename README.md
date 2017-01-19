@@ -12,7 +12,7 @@ This idea is purely theoretical, and in that theoretical world I think it makes 
 
 The idea is to allow people to create networks of credibility. People in the network are connected by approvals. When Jack approves Jill, she joins his network, as well as everyone in her network based on who she has approved. With this network, it would be possible to derive a credibility score for another person in the network based on how closely associated they are.
 
-![Example Credibility Graph](https://s28.postimg.org/63od5vwsd/image10.png)
+![Example Credibility Graph](https://tyleryasaka.me/hosted/ethercred/example-credibility-graph.png)
 
 *Here we see an example network, where the circles are users, green arrows are approvals, and red arrows are disapprovals.*
 
@@ -24,7 +24,8 @@ The big caveat here is that there is some apparent effort required by users to m
 
 I'm curently working on defining the mechanics of this system in formal mathematical terms. What I have so far is (an attempt at) a formal description of the algorithm to calculate the credibility score. Eventually I would like to formally describe not only the algorithm, but also the argument for why this idea could be useful. Once I have that, the end result will be a sort of "whitepaper" if you will. Because if there's a whitepaper, you know the idea must be legit. :wink:
 
-[Credibility Graph: A Credibility Score Calculation Algorithm (formally described)](https://docs.google.com/document/d/1FKuRR0JjW7osRDpTibN8VGarjWCKqdIpSbzw87_jmvw/edit?usp=sharing)
+[A Graph-Based Credibility Score
+Calculation Algorithm](https://tyleryasaka.me/hosted/ethercred/AGraph-BasedCredibilityScoreCalculationAlgorithm.pdf)
 
 ## Implementation
 
