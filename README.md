@@ -33,6 +33,8 @@ One challenge in implementing this system is data integrity. Obviously, all the 
 
 Hypothetically, once users begin creating networks, various existing applications will have the ability to utilize the network and integrate it with their own user systems. For example, Amazon.com could allow users to associate an EtherCred account with their Amazon account. Then users could view the relative credibility of each reviewer while reading reviews, and possibly even view a weighted star rating of the product, based on the relative credibility of the users that have rated it.
 
+![screen capture](https://tyleryasaka.me/hosted/ethercred/demo.gif)
+
 ## Development
 
 ### Requirements:
